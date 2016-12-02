@@ -105,14 +105,5 @@ public class MnistDataSet {
 
 	}
 
-	public static void main(String[] args) {
 
-		MnistDataSet dataSet = new MnistDataSet(
-				"C:\\workspace\\machineLearning\\machine-learning-example\\src\\main\\resources\\mnist\\train-labels.idx1-ubyte",
-				"C:\\workspace\\machineLearning\\machine-learning-example\\src\\main\\resources\\mnist\\train-images.idx3-ubyte");
-		int i = 0;
-		while (dataSet.hasNext()) {
-			System.out.println(i++ +" " + dataSet.read());
-		}
-	}
 }
