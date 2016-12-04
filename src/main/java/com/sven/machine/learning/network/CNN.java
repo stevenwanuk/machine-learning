@@ -1,48 +1,96 @@
 package com.sven.machine.learning.network;
 
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.sven.machine.learning.Layer.Layer;
+import com.sven.machine.learning.layer.Layer;
 import com.sven.machine.learning.mnist.MnistData;
 
 public class CNN
 {
+	Logger log = LoggerFactory.getLogger(this.getClass());
 
-    private List<Layer> layers;
-    private double learningRate;
+	private CNNConfig config;
 
-    public List<Layer> getLayers()
-    {
-        return layers;
-    }
+	public CNN(CNNConfig config)
+	{
+		this.config = config;
+	}
 
-    public void setLayers(List<Layer> layers)
-    {
-        this.layers = layers;
-    }
+	public void init()
+	{
 
-    public double getLearningRate()
-    {
-        return learningRate;
-    }
+		Layer prevLayer = null;
+		int index = 0;
+		for (Layer layer : config.getLayers())
+		{
 
-    public void setLearningRate(double learningRate)
-    {
-        this.learningRate = learningRate;
-    }
+			layer.setLayerIndex(index);
+			if (prevLayer != null)
+			{
+				prevLayer.setAfterLayer(layer);
+				layer.setPrevLayer(prevLayer);
+			}
+			layer.init();
+			log.debug("init layer:" + index + " " + layer.getLayerType() + " " + layer.getMapSize() + " "
+					+ layer.getMapNumber());
 
-    public void init()
-    {
+			prevLayer = layer;
+			index++;
+		}
+	}
 
-    }
+	protected void train(MnistData data)
+	{
+		forward(data);
+		bp(data);
+		learning();
+		// boolean result = backPropagation(data);
+	}
 
-    public void train(MnistData data)
-    {
+	private void forward(MnistData record)
+	{
+		config.getLayers().forEach(layer ->
+		{
+			layer.forward(record);
+		});
+	}
 
-    }
+	private void bp(MnistData record)
+	{
+		for (int i = 0; i < config.getLayers().size(); i++)
+		{
 
-    public void verify(MnistData data)
-    {
+			config.getLayers().get(config.getLayers().size() - 1 - i).bp(record);
+		}
+	}
 
-    }
+	private void learning()
+	{
+		config.getLayers().forEach(layer -> layer.learnFromErrors());
+	}
+
+	protected boolean backPropagation(MnistData record)
+	{
+		// boolean result = setOutLayerErrors(record);
+		// setHiddenLayerErrors();
+		// return result;
+		return false;
+	}
+
+	public void verify(MnistData data)
+	{
+
+	}
+
+	public CNNConfig getConfig()
+	{
+		return config;
+	}
+
+	public void setConfig(CNNConfig config)
+	{
+		this.config = config;
+	}
+
 }

@@ -1,4 +1,4 @@
-package com.sven.machine.learning;
+package com.sven.machinelearning;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
