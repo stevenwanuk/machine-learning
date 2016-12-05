@@ -1,6 +1,6 @@
 package com.sven.machine.learning.utils;
 
-import com.sven.machine.model.Matrix;
+import com.sven.machine.learning.model.Matrix;
 
 public class NNUtil
 {

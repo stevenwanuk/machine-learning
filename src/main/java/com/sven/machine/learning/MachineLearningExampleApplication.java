@@ -8,5 +8,6 @@ public class MachineLearningExampleApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MachineLearningExampleApplication.class, args);
+		
 	}
 }

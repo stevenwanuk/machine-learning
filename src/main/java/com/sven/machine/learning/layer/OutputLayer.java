@@ -7,9 +7,9 @@ import com.sven.machine.learning.enums.ActivationType;
 import com.sven.machine.learning.enums.LayerType;
 import com.sven.machine.learning.enums.LostFunctionType;
 import com.sven.machine.learning.mnist.MnistData;
+import com.sven.machine.learning.model.Matrix;
 import com.sven.machine.learning.utils.MathUtil;
 import com.sven.machine.learning.utils.MatrixUtil;
-import com.sven.machine.model.Matrix;
 
 public class OutputLayer extends Layer
 {

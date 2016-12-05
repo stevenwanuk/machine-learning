@@ -14,7 +14,7 @@ public class InputLayer extends Layer
 	@Override
 	public void forward(MnistData mnistData)
 	{
-		int[][] data = mnistData.getImageByte();
+		double[][] data = mnistData.getImageByte();
 		for (int i = 0; i < mapSize.x; i++)
 		{
 			for (int j = 0; j < mapSize.y; j++)

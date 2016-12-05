@@ -40,7 +40,7 @@ public class CNN
 		}
 	}
 
-	protected void train(MnistData data)
+	public void train(MnistData data)
 	{
 		forward(data);
 		bp(data);

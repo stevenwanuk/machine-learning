@@ -2,9 +2,9 @@ package com.sven.machine.learning.utils;
 
 import java.util.Random;
 
+import com.sven.machine.learning.model.Matrix;
 import com.sven.machine.learning.utils.MathUtil.Operator;
 import com.sven.machine.learning.utils.MathUtil.OperatorOnTwo;
-import com.sven.machine.model.Matrix;
 
 public class MatrixUtil
 {

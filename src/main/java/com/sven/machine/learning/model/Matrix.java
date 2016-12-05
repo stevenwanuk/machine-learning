@@ -1,4 +1,4 @@
-package com.sven.machine.model;
+package com.sven.machine.learning.model;
 
 public class Matrix<T>
 {
