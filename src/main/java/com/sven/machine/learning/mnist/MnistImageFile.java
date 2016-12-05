@@ -21,15 +21,12 @@ public class MnistImageFile extends MnistFile
     {
 
         double[][] data = new double[rows][cols];
+
         for (int row = 0; row < rows; row++)
         {
             for (int col = 0; col < cols; col++)
-            { 
-                int b  =readUnsignedByte();
-                if (b != 0) {
-                    data[row][col] =  (double)Math.round(b / 255f * 100) / 100;
-                }
-                
+            {
+                data[row][col] = readUnsignedByte();
             }
         }
         return data;

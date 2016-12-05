@@ -1,5 +1,8 @@
 package com.sven.machine.learning.layer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.sven.machine.learning.enums.LayerType;
 import com.sven.machine.learning.mnist.MnistData;
 import com.sven.machine.learning.model.Matrix;
@@ -9,7 +12,7 @@ import com.sven.machine.learning.utils.NNUtil;
 
 public class ConvolutionalLayer extends Layer
 {
-
+    Logger log = LoggerFactory.getLogger(this.getClass());
 	private int channelSize;
 	private Matrix<Integer> stride;
 	private Matrix<Integer> padding;
@@ -32,12 +35,12 @@ public class ConvolutionalLayer extends Layer
 		}
 
 		bias = MatrixUtil.randomArray(mapNumber);
-
 	}
 
 	@Override
 	public void forward(MnistData data)
 	{
+	    //log.debug("convolutionalLayer forward");
 		int prevMapNumber = prevLayer.getMapNumber();
 		for (int mapIndex = 0; mapIndex < mapNumber; mapIndex++)
 		{
@@ -64,6 +67,7 @@ public class ConvolutionalLayer extends Layer
 
 			});
 		}
+		//LogUtil.logMaps(maps);
 	}
 
 	public ConvolutionalLayer()
@@ -81,12 +85,14 @@ public class ConvolutionalLayer extends Layer
 		this.channelSize = channelSize;
 	}
 
-	public Matrix<Integer> getKernelSize()
+	@Override
+    public Matrix<Integer> getKernelSize()
 	{
 		return kernelSize;
 	}
 
-	public void setKernelSize(Matrix<Integer> kernelSize)
+	@Override
+    public void setKernelSize(Matrix<Integer> kernelSize)
 	{
 		this.kernelSize = kernelSize;
 	}

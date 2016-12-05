@@ -82,7 +82,7 @@ public class OutputLayer extends Layer
 			temp[i] = maps[i][0][0];
 		}
 
-		log.info("expected:" + label + ", actual:" + MathUtil.getMaxIndex(temp));
+		//log.debug("expected:" + label + ", actual:" + MathUtil.getMaxIndex(temp));
 
 		for (int i = 0; i < mapNumber; i++)
 		{
