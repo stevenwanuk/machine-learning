@@ -102,7 +102,9 @@ public class CNN
         int correctNumber = 0;
         for (MnistData data : batch)
         {
-            if (train(data))
+            forward(data);
+            
+            if (isCorrect(data))
             {
                 correctNumber++;
             }
@@ -143,6 +145,7 @@ public class CNN
 
         return isCorrect(data);
     }
+    
 
     protected boolean isCorrect(MnistData data)
     {
@@ -154,6 +157,9 @@ public class CNN
         {
             temp[i] = maps[i][0][0];
         }
+        
+        log.debug("test with result:" + MathUtil.getMaxIndex(temp));
+        
         return (data.getLabel() == MathUtil.getMaxIndex(temp));
     }
 

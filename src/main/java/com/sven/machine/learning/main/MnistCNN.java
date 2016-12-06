@@ -24,6 +24,7 @@ import com.sven.machine.learning.mnist.MnistDataSet;
 import com.sven.machine.learning.model.Matrix;
 import com.sven.machine.learning.network.CNN;
 import com.sven.machine.learning.network.CNNConfig;
+import com.sven.machine.learning.utils.ImageUtil;
 
 public class MnistCNN
 {
@@ -106,10 +107,26 @@ public class MnistCNN
     {
          CNN cnn = new CNN(buildNetwork());
          cnn.init();
-         train(cnn);
+         //train(cnn);
          
          cnn.load("config");
-         test(cnn);
+         
+         //test(cnn);
+         testhw(cnn);
+    }
+    
+    public static void testhw(CNN cnn) throws IOException{
+        
+        double[][] d = ImageUtil.getImage("5.jpg");
+        
+        List<MnistData> batch = new ArrayList<>();
+        MnistData md = new MnistData();
+        md.setImageByte(d);
+        md.setLabel(5);
+        saveToImage(d, "test");
+        normalize(md);
+        batch.add(md);
+        cnn.test(batch);
     }
 
     public static void saveToImage(double[][] imageD, String fileName) throws IOException
@@ -153,7 +170,7 @@ public class MnistCNN
                 for (int j = 0; j < batchSize && dataSet.hasNext(); j++)
                 {
                     MnistData data = dataSet.read();
-                    normalize(data);
+                    //normalize(data);
                     batch.add(data);
                 }
                 cnn.train(batch);
