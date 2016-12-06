@@ -1,7 +1,14 @@
 package com.sven.machine.learning.main;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,10 +28,10 @@ import com.sven.machine.learning.network.CNNConfig;
 public class MnistCNN
 {
     static Logger log = LoggerFactory.getLogger(MnistCNN.class);
-
+    static String projectPath = System.getProperty("user.dir");
     public static MnistDataSet readTrainData()
     {
-        String projectPath = System.getProperty("user.dir");
+       
 
         MnistDataSet dataSet = new MnistDataSet(
                 projectPath + "\\src\\main\\resources\\mnist\\train-labels.idx1-ubyte",
@@ -34,8 +41,6 @@ public class MnistCNN
 
     public static MnistDataSet readTestData()
     {
-        String projectPath = System.getProperty("user.dir");
-
         MnistDataSet dataSet = new MnistDataSet(
                 projectPath + "\\src\\main\\resources\\mnist\\t10k-labels.idx1-ubyte",
                 projectPath + "\\src\\main\\resources\\mnist\\t10k-images.idx3-ubyte");
@@ -64,7 +69,7 @@ public class MnistCNN
         c0.setKernelSize(new Matrix<>(5, 5));
         c0.setPadding(new Matrix<>(0, 0));
         c0.setStride(new Matrix<>(1, 1));
-        c0.setMapNumber(6);
+        c0.setMapNumber(4);
         c0.setChannelSize(1);
         layers.add(c0);
         // 24*24*6
@@ -80,7 +85,7 @@ public class MnistCNN
         c1.setKernelSize(new Matrix<>(5, 5));
         c1.setPadding(new Matrix<>(0, 0));
         c1.setStride(new Matrix<>(1, 1));
-        c1.setMapNumber(12);
+        c1.setMapNumber(8);
         layers.add(c1);
         // 8*8*12
         SubsamplingLayer s1 = new SubsamplingLayer();
@@ -97,17 +102,41 @@ public class MnistCNN
         return layers;
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
-
-        CNN cnn = new CNN(buildNetwork());
-        cnn.init();
-        train(cnn);
-        test(cnn);
-
+         CNN cnn = new CNN(buildNetwork());
+         cnn.init();
+         train(cnn);
+         
+         cnn.load("config");
+         test(cnn);
     }
 
-    public static void train(CNN cnn)
+    public static void saveToImage(double[][] imageD, String fileName) throws IOException
+    {
+        BufferedImage image = new BufferedImage(28, 28, BufferedImage.TYPE_BYTE_GRAY);
+        Graphics2D graphics = image.createGraphics();
+
+        graphics.setPaint(new Color(255, 255, 255));
+        graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
+        for (int i = 0; i < imageD.length; i++)
+        {
+            for (int j = 0; j < imageD[0].length; j++)
+            {
+                int gray = (int) imageD[i][j];
+                if (gray > 30)
+
+                    image.setRGB(i, j, 1, 1, new int[] { 0, 0, 0 }, 0, 1);
+
+            }
+        }
+        ImageIO.write(
+                image,
+                "png",
+                new File(projectPath +"\\src\\main\\resources\\sample\\" + fileName + ".png"));
+    }
+
+    public static void train(CNN cnn) throws IOException
     {
         log.info("********start to train**********");
         int batchSize = 100;
@@ -128,6 +157,7 @@ public class MnistCNN
                     batch.add(data);
                 }
                 cnn.train(batch);
+                cnn.save("config");
 
             }
             dataSet.setCurrent(0);

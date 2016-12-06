@@ -14,7 +14,7 @@ import com.sven.machine.learning.utils.MatrixUtil;
 public class OutputLayer extends Layer
 {
 
-	Logger log = LoggerFactory.getLogger(this.getClass());
+    transient Logger log = LoggerFactory.getLogger(this.getClass());
 	private int outputNumber;
 	private ActivationType activationType;
 	private LostFunctionType lostFunctionType;

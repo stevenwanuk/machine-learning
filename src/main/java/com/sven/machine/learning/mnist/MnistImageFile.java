@@ -26,7 +26,7 @@ public class MnistImageFile extends MnistFile
         {
             for (int col = 0; col < cols; col++)
             {
-                data[row][col] = readUnsignedByte();
+                data[col][row] = readUnsignedByte();
             }
         }
         return data;

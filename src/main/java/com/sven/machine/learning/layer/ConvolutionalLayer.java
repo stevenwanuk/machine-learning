@@ -12,7 +12,7 @@ import com.sven.machine.learning.utils.NNUtil;
 
 public class ConvolutionalLayer extends Layer
 {
-    Logger log = LoggerFactory.getLogger(this.getClass());
+    transient Logger log = LoggerFactory.getLogger(this.getClass());
 	private int channelSize;
 	private Matrix<Integer> stride;
 	private Matrix<Integer> padding;
