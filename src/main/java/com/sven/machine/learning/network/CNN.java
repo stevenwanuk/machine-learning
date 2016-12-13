@@ -116,6 +116,28 @@ public class CNN
                 "correct/batch[" + correctNumber + "/" + batchSize + "]" + "=" + rate
                         + "%");
     }
+    
+    
+    public void testWithLog(List<MnistData> batch)
+    {
+        int batchSize = batch.size();
+        int correctNumber = 0;
+        for (MnistData data : batch)
+        {
+            forward(data);
+            
+            if (isCorrectWithLog(data))
+            {
+                correctNumber++;
+            }
+            ;
+        }
+
+        double rate = Math.round(correctNumber * 10000d / batchSize) / 100d;
+        log.info(
+                "correct/batch[" + correctNumber + "/" + batchSize + "]" + "=" + rate
+                        + "%");
+    }
 
     public void train(List<MnistData> batch)
     {
@@ -146,6 +168,21 @@ public class CNN
         return isCorrect(data);
     }
     
+    protected boolean isCorrectWithLog(MnistData data)
+    {
+        // look for result
+        double[][][] maps = this.config.getLayers().stream().filter(
+                s -> s.getLayerType() == LayerType.outputLayer).findFirst().get().getMaps();
+        double[] temp = new double[maps.length];
+        for (int i = 0; i < temp.length; i++)
+        {
+            temp[i] = maps[i][0][0];
+        }
+        
+        log.debug("test with result:" + MathUtil.getMaxIndex(temp));
+        
+        return (data.getLabel() == MathUtil.getMaxIndex(temp));
+    }
 
     protected boolean isCorrect(MnistData data)
     {
@@ -157,8 +194,6 @@ public class CNN
         {
             temp[i] = maps[i][0][0];
         }
-        
-        //log.debug("test with result:" + MathUtil.getMaxIndex(temp));
         
         return (data.getLabel() == MathUtil.getMaxIndex(temp));
     }

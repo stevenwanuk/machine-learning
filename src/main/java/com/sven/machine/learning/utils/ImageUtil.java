@@ -29,7 +29,7 @@ public class ImageUtil
         
         Image scaledImage1 =
                 mage.getScaledInstance(28, 28, Image.SCALE_AREA_AVERAGING);
-        saveTookitImage(scaledImage1, scaledImage1.getWidth(null), scaledImage1.getHeight(null), "3.2");
+//        saveTookitImage(scaledImage1, scaledImage1.getWidth(null), scaledImage1.getHeight(null), "3.2");
 
         BufferedImage bimage1 = new BufferedImage(scaledImage1.getWidth(null), scaledImage1.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         bimage1.getGraphics().drawImage(scaledImage1, 0, 0, null);
@@ -48,7 +48,7 @@ public class ImageUtil
             }
         }
 
-        BufferedImage image = new BufferedImage(112, 112, BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = new BufferedImage(28, 28, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = image.createGraphics();
         graphics.setPaint(new Color(255, 255, 255));
         graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
@@ -78,40 +78,9 @@ public class ImageUtil
         
         ImageIO.write(
                 image,
-                "png",
-                new File(projectPath + "\\src\\main\\resources\\sample\\hw\\" + "2.6"
-                        + ".png"));
+                "jpg",
+                new File(projectPath + "\\src\\main\\resources\\sample\\hw\\" + "temp_" + fileName));
         
-        
-        
-//        Image scaledImage2 = image.getScaledInstance(28, 28, Image.SCALE_SMOOTH);
-//        saveTookitImage(scaledImage2, scaledImage2.getWidth(null), scaledImage2.getHeight(null), "9");
-//        scaledImage2.flush();
-//        
-//        BufferedImage image2 = new BufferedImage(28, 28, BufferedImage.TYPE_INT_RGB);
-//        image2.getGraphics().drawImage(scaledImage2, 0, 0, null);
-//        saveTookitImage(image2, image2.getWidth(null), image2.getHeight(null), "3.3");
-//        
-//        
-//        double[][] d = new double[image2.getWidth()][image2.getHeight()];
-//        for(int i = 0; i< image2.getWidth(); i++) 
-//        {
-//        
-//            for(int j = 0; j < image2.getHeight(); j++) {
-//                
-//                
-//                
-//                int rgb = image2.getRGB(i, j);
-//                int gray= rgb& 0xFF;
-//                if (gray <= 0) {
-//                    d[i][j] = 0;
-//                } else {
-//                    d[i][j] = 100;    
-//                }
-//                d[i][j] = rgb;
-//                
-//            }
-//        }
         
         return d;
     }
