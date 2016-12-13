@@ -36,14 +36,14 @@ public class InputLayer extends Layer
 	@Override
 	public void bp(MnistData data)
 	{
-		// TODO Auto-generated method stub
+		//Nothing for input
 
 	}
 
 	@Override
 	public void learnFromErrors()
 	{
-		// TODO Auto-generated method stub
+		//Nothing for input
 
 	}
 }

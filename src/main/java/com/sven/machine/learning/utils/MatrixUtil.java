@@ -201,6 +201,17 @@ public class MatrixUtil
 		}
 		return data;
 	}
+	
+	   public static double[] initArray(int len, double initWeight)
+	    {
+	        double[] data = new double[len];
+	        for (int i = 0; i < len; i++)
+	        {
+	            // data[i] = r.nextDouble() / 10 - 0.05;
+	            data[i] = initWeight;
+	        }
+	        return data;
+	    }
 
 	public static double[][] rot180(double[][] matrix)
 	{
@@ -266,6 +277,21 @@ public class MatrixUtil
 		return outMatrix;
 	}
 
+	
+	public static double[][] initMatrix(int x, int y, double initWeight) 
+	{
+	    double[][] matrix = new double[x][y];
+	    for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+
+                matrix[i][j] = initWeight;
+            }
+        }
+	    return matrix;
+	}
+	
 	public static double[][] randomMatrix(int x, int y)
 	{
 		double[][] matrix = new double[x][y];

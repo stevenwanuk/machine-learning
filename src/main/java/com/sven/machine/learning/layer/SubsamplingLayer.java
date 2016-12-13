@@ -51,12 +51,14 @@ public class SubsamplingLayer extends Layer
 		this.poolingType = poolingType;
 	}
 
-	public Matrix<Integer> getKernelSize()
+	@Override
+    public Matrix<Integer> getKernelSize()
 	{
 		return kernelSize;
 	}
 
-	public void setKernelSize(Matrix<Integer> kernelSize)
+	@Override
+    public void setKernelSize(Matrix<Integer> kernelSize)
 	{
 		this.kernelSize = kernelSize;
 	}
@@ -103,7 +105,7 @@ public class SubsamplingLayer extends Layer
 	@Override
 	public void learnFromErrors()
 	{
-		// TODO Auto-generated method stub
+		//nothing for sub
 
 	}
 

@@ -1,7 +1,10 @@
 package com.sven.machine.learning.utils;
 
+import com.sven.machine.learning.mnist.MnistData;
+
 public class MathUtil
 {
+    
 	public static double sum(double[][] error)
 	{
 		int m = error.length;
@@ -33,11 +36,44 @@ public class MathUtil
 	public static double error(double expected, double actual)
 	{
 		return actual * (1 - actual) * (expected - actual);
+	    //return (expected - actual) * (expected - actual)  / 2;
 	}
 
+    public static void normalizeForSigmoid(MnistData data)
+    {
+
+        double[][] d = data.getImageByte();
+        for (int i = 0; i < d.length; i++)
+        {
+            for (int j = 0; j < d[0].length; j++)
+            {
+
+                // d[i][j] = (double) Math.round(d[i][j] / 255f * 100) / 100;
+                d[i][j] = d[i][j] > 30 ? 1 : 0;
+            }
+
+        }
+    }
+    
+    public static void normalizeForRelu(MnistData data)
+    {
+
+        double[][] d = data.getImageByte();
+        for (int i = 0; i < d.length; i++)
+        {
+            for (int j = 0; j < d[0].length; j++)
+            {
+
+               
+                d[i][j] = d[i][j] > 30 ? 1 : -1;
+            }
+
+        }
+    }
 	public static double sigmod(double x)
 	{
 		return 1 / (1 + Math.pow(Math.E, -x));
+	    //return Math.max(0, x);
 	}
 
 	public interface Operator

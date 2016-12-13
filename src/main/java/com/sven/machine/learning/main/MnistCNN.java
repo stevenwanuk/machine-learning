@@ -24,6 +24,7 @@ import com.sven.machine.learning.mnist.MnistDataSet;
 import com.sven.machine.learning.model.Matrix;
 import com.sven.machine.learning.network.CNN;
 import com.sven.machine.learning.network.CNNConfig;
+import com.sven.machine.learning.utils.MathUtil;
 
 public class MnistCNN
 {
@@ -72,7 +73,7 @@ public class MnistCNN
         c0.setMapNumber(4);
         c0.setChannelSize(1);
         layers.add(c0);
-        // 24*24*6
+        // 24*24*4
 
         SubsamplingLayer s0 = new SubsamplingLayer();
         s0.setKernelSize(new Matrix<>(2, 2));
@@ -80,21 +81,21 @@ public class MnistCNN
         s0.setPadding(new Matrix<>(0, 0));
         s0.setPoolingType(PoolingType.max);
         layers.add(s0);
-        // 12*12*6
+        // 12*12*4
         ConvolutionalLayer c1 = new ConvolutionalLayer();
         c1.setKernelSize(new Matrix<>(5, 5));
         c1.setPadding(new Matrix<>(0, 0));
         c1.setStride(new Matrix<>(1, 1));
         c1.setMapNumber(8);
         layers.add(c1);
-        // 8*8*12
+        // 8*8*8
         SubsamplingLayer s1 = new SubsamplingLayer();
         s1.setKernelSize(new Matrix<>(2, 2));
         s1.setStride(new Matrix<>(2, 2));
         s1.setPadding(new Matrix<>(0, 0));
         s1.setPoolingType(PoolingType.max);
         layers.add(s1);
-        // 12
+        // 8
         OutputLayer o0 = new OutputLayer();
         o0.setOutputNumber(10);
         layers.add(o0);
@@ -107,10 +108,18 @@ public class MnistCNN
          CNN cnn = new CNN(buildNetwork());
          cnn.init();
          train(cnn);
-         
          cnn.load("config");
          test(cnn);
     }
+    
+    public static CNN load() throws IOException 
+    {
+        CNN cnn = new CNN(buildNetwork());
+        cnn.init();
+        cnn.load("config");
+        return cnn;
+    }
+
 
     public static void saveToImage(double[][] imageD, String fileName) throws IOException
     {
@@ -153,7 +162,7 @@ public class MnistCNN
                 for (int j = 0; j < batchSize && dataSet.hasNext(); j++)
                 {
                     MnistData data = dataSet.read();
-                    normalize(data);
+                    MathUtil.normalizeForSigmoid(data);
                     batch.add(data);
                 }
                 cnn.train(batch);
@@ -173,25 +182,13 @@ public class MnistCNN
         while (dataSet.hasNext())
         {
             MnistData data = dataSet.read();
-            normalize(data);
+            MathUtil.normalizeForSigmoid(data);
             batch.add(data);
         }
         cnn.test(batch);
     }
 
-    private static void normalize(MnistData data)
-    {
 
-        double[][] d = data.getImageByte();
-        for (int i = 0; i < d.length; i++)
-        {
-            for (int j = 0; j < d[0].length; j++)
-            {
+    
 
-                // d[i][j] = (double) Math.round(d[i][j] / 255f * 100) / 100;
-                d[i][j] = d[i][j] > 30 ? 1 : 0;
-            }
-
-        }
-    }
 }
