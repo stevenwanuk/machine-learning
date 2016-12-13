@@ -158,7 +158,7 @@ public class CNN
             temp[i] = maps[i][0][0];
         }
         
-        log.debug("test with result:" + MathUtil.getMaxIndex(temp));
+        //log.debug("test with result:" + MathUtil.getMaxIndex(temp));
         
         return (data.getLabel() == MathUtil.getMaxIndex(temp));
     }

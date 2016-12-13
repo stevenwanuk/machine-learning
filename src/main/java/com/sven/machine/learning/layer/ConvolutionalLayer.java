@@ -26,11 +26,13 @@ public class ConvolutionalLayer extends Layer
 		errors = new double[mapNumber][mapSize.x][mapSize.y];
 
 		kernel = new double[prevLayer.getMapNumber()][mapNumber][kernelSize.x][kernelSize.y];
+		double initWeight = 1d / (prevLayer.getMapSize().x * prevLayer.getMapSize().y);
 		for (int i = 0; i < prevLayer.getMapNumber(); i++)
 		{
 			for (int j = 0; j < mapNumber; j++)
 			{
 				kernel[i][j] = MatrixUtil.randomMatrix(kernelSize.x, kernelSize.y);
+			    //kernel[i][j] = MatrixUtil.initMatrix(kernelSize.x, kernelSize.y, initWeight);
 			}
 		}
 
@@ -47,7 +49,6 @@ public class ConvolutionalLayer extends Layer
 			double[][] sum = null;
 			for (int prevMapIndex = 0; prevMapIndex < prevMapNumber; prevMapIndex++)
 			{
-				// Something wrong here. seems not to sum
 				double[][] prevMap = prevLayer.getMaps()[prevMapIndex];
 
 				sum = MatrixUtil.matrixOp(

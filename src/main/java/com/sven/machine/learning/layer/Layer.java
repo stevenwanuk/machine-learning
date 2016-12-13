@@ -31,7 +31,7 @@ public abstract class Layer
 
     abstract public void learnFromErrors();
 
-    protected static double ALPHA = 0.85;
+    protected static double ALPHA = 1;
     protected static final double LAMBDA = 0;
 
     protected Operator multiply_alpha = new Operator()

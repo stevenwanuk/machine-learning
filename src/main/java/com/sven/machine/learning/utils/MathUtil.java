@@ -33,11 +33,13 @@ public class MathUtil
 	public static double error(double expected, double actual)
 	{
 		return actual * (1 - actual) * (expected - actual);
+	    //return (expected - actual) * (expected - actual)  / 2;
 	}
 
 	public static double sigmod(double x)
 	{
 		return 1 / (1 + Math.pow(Math.E, -x));
+	    //return Math.max(0, x);
 	}
 
 	public interface Operator
